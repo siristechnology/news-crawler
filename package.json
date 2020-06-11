@@ -1,12 +1,24 @@
 {
   "name": "news-crawler",
   "version": "1.0.0",
-  "description": "",
-  "main": "jest.config.js",
+  "description": "Config based news crawler using Google Puppeteer",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "test": "jest --testMatch '**/?(*.)+(spec|test).[tj]s?(x)' ",
+    "test:coverage": "jest --coverage --testMatch '**/?(*.)+(spec|test).[tj]s?(x)' "
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "@syuraj",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "2.1.1",
+    "puppeteer-extra": "3.1.9",
+    "puppeteer-extra-plugin-adblocker": "2.11.3",
+    "puppeteer-extra-plugin-block-resources": "2.2.4",
+    "puppeteer-extra-plugin-stealth": "2.4.9"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
 }
