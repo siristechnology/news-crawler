@@ -1,0 +1,35 @@
+[
+    {
+        "name": "ekantipur",
+        "homepage": "https://ekantipur.com",
+        "links": [
+            {
+                "url": "https://ekantipur.com",
+                "category": "headlines",
+                "link-selectors": [
+                    "article.normal > h1 > a"
+                ]
+            },
+            {
+                "url": "https://ekantipur.com/sports",
+                "category": "sports",
+                "link-selectors": [
+                    "article.normal  h2 > a"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "",
+        "homepage": "https://www.dainiknepal.com",
+        "links": [
+            {
+                "url": "https://www.dainiknepal.com/",
+                "category": "headlines",
+                "link-selectors": [
+                    "#body_a #visesh > h1 > a"
+                ]
+            }
+        ]
+    }
+]
