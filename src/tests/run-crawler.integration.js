@@ -4,11 +4,11 @@ jest.setTimeout(60000)
 
 describe('link-crawler', () => {
 	it('should return links using default source-config', async () => {
-		const links = await newsCrawler()
+		const articles = await newsCrawler()
 
-		console.log('printing links', links)
+		console.log('printing articles', articles)
 
-		expect(links.length).toBeGreaterThan(1)
+		expect(articles.length).toBeGreaterThan(1)
 	})
 
 	it('should return links using custom source-config', async () => {
@@ -33,8 +33,10 @@ describe('link-crawler', () => {
 			},
 		]
 
-		const links = await newsCrawler(sourceConfigs)
+		const articles = await newsCrawler(sourceConfigs)
 
-		expect(links.length).toBeGreaterThan(1)
+		console.log('printing articles', articles)
+
+		expect(articles.length).toBeGreaterThan(1)
 	})
 })

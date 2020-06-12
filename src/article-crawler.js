@@ -23,7 +23,7 @@ module.exports = async function (sourceConfigs) {
 
 				const title = await browserPage.$eval(articleSelectors.title, (element) => element.textContent)
 				// const excerpt = await browserPage.$eval(articleSelectors.excerpt, (element) => element.textContent)
-				const leadImage = await browserPage.$$eval(articleSelectors['lead-image'], (element) => element.src)
+				const leadImage = await browserPage.$eval(articleSelectors['lead-image'], (element) => element.src)
 
 				let content = []
 				for (const contentSelector of articleSelectors.content) {
@@ -31,19 +31,17 @@ module.exports = async function (sourceConfigs) {
 					content.push(innerContent)
 				}
 
-				console.log('printing content', content)
-
-				const likesCount = await browserPage.$$eval(articleSelectors['likes-count'], (element) => parseInt(element.text()))
+				// const likesCount = await browserPage.$eval(articleSelectors['likes-count'], (element) => parseInt(element.textContent))
 
 				articles.push({
 					source: source.name,
 					category: page.category,
 					url: articleUrl,
 					title: title,
-					excerpt: excerpt,
+					// excerpt: excerpt,
 					leadImage: leadImage,
 					content: content,
-					likesCount: likesCount,
+					// likesCount: likesCount,
 				})
 			}
 		}
