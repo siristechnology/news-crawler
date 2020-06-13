@@ -2,7 +2,15 @@
 
 Config based news crawler using Google Puppeteer
 
-### Sample News Source Config
+-   Uses `puppeteer-extra-plugin-adblocker` to block ads
+-   Uses `puppeteer-extra-plugin-stealth` to prevent detection
+-   Uses `html-to-text` to convert html to text
+
+## Install
+
+    yarn add news-crawler
+
+## Sample News Source Config
 
 ```
 [
@@ -34,7 +42,7 @@ Config based news crawler using Google Puppeteer
 ]
 ```
 
-### Sample News Output Json
+## Sample News Output Json
 
 ```
 [
