@@ -1,6 +1,7 @@
 const getBrowser = require('./get-browser')
 const devices = require('puppeteer/DeviceDescriptors')
 const device = devices['iPhone 8']
+const htmlToText = require('html-to-text')
 
 module.exports = async function (sourceConfigs) {
 	const browser = await getBrowser()
@@ -30,6 +31,17 @@ module.exports = async function (sourceConfigs) {
 					const innerContent = await browserPage.$$eval(contentSelector, (elements) => elements.map((element) => element.innerHTML))
 					content.push(innerContent)
 				}
+
+				content = htmlToText
+					.fromString(content, {
+						wordwrap: false,
+						ignoreImage: true,
+						ignoreHref: true,
+						ignoreImage: true,
+						preserveNewlines: false,
+					})
+					.trim()
+					.slice(0, 2000)
 
 				// const likesCount = await browserPage.$eval(articleSelectors['likes-count'], (element) => parseInt(element.textContent))
 

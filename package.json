@@ -1,6 +1,6 @@
 {
   "name": "news-crawler",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Config based news crawler using Google Puppeteer",
   "main": "src/index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   "author": "@syuraj",
   "license": "ISC",
   "dependencies": {
+    "html-to-text": "^5.1.1",
     "puppeteer": "2.1.1",
     "puppeteer-extra": "3.1.9",
     "puppeteer-extra-plugin-adblocker": "2.11.3",
