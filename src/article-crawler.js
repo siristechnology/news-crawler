@@ -3,9 +3,10 @@ const devices = require('puppeteer/DeviceDescriptors')
 const device = devices['iPhone 8']
 const htmlToText = require('html-to-text')
 
-module.exports = async function (sourceConfigs) {
+module.exports = async function (sourceConfigs, ipAddress) {
 	const browser = await getBrowser()
 	const browserPage = await browser.newPage()
+	await browserPage.setDefaultNavigationTimeout(0);
 	await browserPage.emulate(device)
 
 	let articles = []
@@ -18,43 +19,56 @@ module.exports = async function (sourceConfigs) {
 
 			const linkSelector = page['link-selector']
 			const articleUrls = await browserPage.$$eval(linkSelector, (elements) => elements.map((element) => element.href))
-
-			for (const articleUrl of articleUrls) {
-				await browserPage.goto(articleUrl)
-
-				const title = await browserPage.$eval(articleSelectors.title, (element) => element.textContent)
-				// const excerpt = await browserPage.$eval(articleSelectors.excerpt, (element) => element.textContent)
-				const leadImage = await browserPage.$eval(articleSelectors['lead-image'], (element) => element.src)
-
-				let content = []
-				for (const contentSelector of articleSelectors.content) {
-					const innerContent = await browserPage.$$eval(contentSelector, (elements) => elements.map((element) => element.innerHTML))
-					content.push(innerContent)
-				}
-
-				content = htmlToText
-					.fromString(content, {
-						wordwrap: false,
-						ignoreImage: true,
-						ignoreHref: true,
-						ignoreImage: true,
-						preserveNewlines: false,
+			for (const articleUrl of articleUrls.slice(0,3)) {
+				try{
+					await browserPage.goto(articleUrl,{
+						waitUntil: 'load',
+						// Remove the timeout
+						timeout: 0
 					})
-					.trim()
-					.slice(0, 2000)
 
-				// const likesCount = await browserPage.$eval(articleSelectors['likes-count'], (element) => parseInt(element.textContent))
+					const title = await browserPage.$eval(articleSelectors.title, (element) => element.textContent)
+					const excerpt = await browserPage.$eval(articleSelectors.excerpt, (element) => element.textContent)
+					const leadImage = await browserPage.$eval(articleSelectors['lead-image'], (element) => element.src)
+					let content = []
+					for (const contentSelector of articleSelectors.content) {
+						const innerContent = await browserPage.$$eval(contentSelector, (elements) => elements.map((element) => element.innerHTML))
+						content.push(innerContent)
+					}
 
-				articles.push({
-					source: source.name,
-					category: page.category,
-					url: articleUrl,
-					title: title,
-					// excerpt: excerpt,
-					leadImage: leadImage,
-					content: content,
-					// likesCount: likesCount,
-				})
+					content = htmlToText
+						.fromString(content, {
+							wordwrap: false,
+							ignoreImage: true,
+							ignoreHref: true,
+							ignoreImage: true,
+							preserveNewlines: false,
+						})
+						.trim()
+						.slice(0, 2000)
+
+					let article = {
+						source: source.sourceId,
+						category: page.category,
+						url: articleUrl,
+						title,
+						shortDescription: excerpt,
+						imageLink: leadImage,
+						isHeadline: true,
+						content: content,
+						createdDate: source.crawlTime,
+						modifiedDate: source.crawlTime,
+						publishedDate: source.crawlTime,
+						link: articleUrl,
+						hostIp: ipAddress,
+						topic: page.category
+					}
+
+					articles.push(article)
+
+				}catch(error){
+					console.log("error produced article crawl",error.message, articleUrl)	
+				}
 			}
 		}
 	}
