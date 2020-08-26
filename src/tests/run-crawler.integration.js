@@ -3,13 +3,6 @@ const newsCrawler = require('../index')
 jest.setTimeout(60000)
 
 describe('link-crawler', () => {
-	it('should return links using default source-config', async () => {
-		const articles = await newsCrawler()
-
-		console.log('printing articles', articles)
-
-		expect(articles.length).toBeGreaterThan(1)
-	})
 
 	it('should return links using custom source-config', async () => {
 		const sourceConfigs = [
