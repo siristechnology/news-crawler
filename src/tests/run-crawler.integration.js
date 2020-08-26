@@ -22,11 +22,12 @@ describe('link-crawler', () => {
 					content: ['main article div.text-wrap p.description', 'main article div.text-wrap div.description'],
 					tags: '',
 					'likes-count': 'main > article > header div.total.shareTotal',
+					LINK_SELECTOR: "#wrapper > main > section article > div.teaser > a"
 				},
 			},
 		]
 
-		const articles = await newsCrawler(sourceConfigs)
+		const articles = await newsCrawler(sourceConfigs, 3)
 
 		console.log('printing articles', articles)
 
