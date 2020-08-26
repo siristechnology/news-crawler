@@ -18,7 +18,7 @@ describe('link-crawler', () => {
 			  title: 'main > article > header > h1',
 			  excerpt: 'main > article .description> p:nth-child(1)',
 			  'lead-image': '#wrapper main article header figure img',
-			  content: ['main article div.text-wrap p.description', 'main article div.text-wrap div.description'y],
+			  content: ['main article div.text-wrap p.description', 'main article div.text-wrap div.description'],
 			  tags: '',
 			  'likes-count': 'main > article > header div.total.shareTotal',
 			  LINK_SELECTOR: '#wrapper > main > section article > div.teaser > a'
