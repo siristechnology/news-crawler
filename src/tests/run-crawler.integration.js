@@ -12,7 +12,7 @@ describe('link-crawler', () => {
 					url: 'https://ekantipur.com/sports',
 					category: 'sports',
 					'link-selector': '#wrapper > main > section article > div.teaser > a',	
-				] 
+				}
 			],
 			'article-detail-selectors': {
 			  title: 'main > article > header > h1',
