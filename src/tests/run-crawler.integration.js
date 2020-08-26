@@ -23,9 +23,9 @@ describe('link-crawler', () => {
 			  'likes-count': 'main > article > header div.total.shareTotal',
 			  LINK_SELECTOR: '#wrapper > main > section article > div.teaser > a'
 			},
-			sourceId: 5f44b866eb376452f1894531,
+			sourceId: "5f44b866eb376452f1894531",
 			logoLink: '/assets/logos/kantipur.jpg',
-			crawlTime: 2020-08-26T03:49:04.030Z
+			crawlTime: "2020-08-26T03:49:04.030Z"
 		  }
 		]
 
