@@ -49,7 +49,7 @@ module.exports = async function (sourceConfigs, articleUrlLength) {
 						.slice(0, 2000)
 
 					let article = {
-						source: source.sourceId,
+						source: source.sourceName,
 						category: page.category,
 						url: articleUrl,
 						title,
