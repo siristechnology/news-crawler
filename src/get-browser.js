@@ -10,6 +10,8 @@ module.exports = async function ({ headless }) {
 
 	const browser = await puppeteer.launch({
 		args: [
+			'--no-sandbox',
+			'--disable-setuid-sandbox',
 			'--disable-accelerated-video',
 			'--disable-extensions',
 			'--disable-metrics',
