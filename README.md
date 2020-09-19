@@ -10,6 +10,10 @@ Config based news crawler using Google Puppeteer
 
     yarn add news-crawler
 
+## Sample code
+
+    const articles = await NewsCrawler(sourceConfig, { headless: false })
+
 ## Sample News Source Config
 
 ```
