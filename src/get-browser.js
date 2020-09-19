@@ -5,23 +5,40 @@ puppeteer.use(StealthPlugin())
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
 
-module.exports = async function () {
+module.exports = async function ({ headless }) {
 	const browser = await puppeteer.launch({
 		args: [
-			'--no-sandbox',
-			'--disable-setuid-sandbox',
 			'--disable-accelerated-video',
 			'--disable-extensions',
-			'--renderer',
 			'--disable-metrics',
 			'--disable-plugins',
 			'--disable-images',
 			'--disable-infobars',
-			'--reader-mode',
+			'--disable-flash-3d',
 			'--ignore-certifcate-errors',
+			'--disable-notifications',
+			'--disable-geolocation',
+			'--disable-session-crashed-bubble',
+			'--no-zygote',
+			'--autoplay-policy=user-gesture-required',
+			'--disable-features=PreloadMediaEngagementData, MediaEngagementBypassAutoplayPolicies',
+			'--no-default-browser-check',
+			'--no-experiments',
+			'--no-first-run',
+			'--no-initial-navigation',
+			'--noerrdialogs',
+			'--disable-auto-reload',
+			'--js-flags=--max_old_space_size=512',
+			'--max_old_space_size=512',
+			'--disable-default-apps',
+			'--disable-crash-reporter',
+			'--disable-audio-output',
+			'--disable-sync',
+			'--disable-speech-api',
+			'--user-gesture-required',
 		],
 		ignoreHTTPSErrors: true,
-		// headless: false,
+		headless,
 	})
 
 	return browser

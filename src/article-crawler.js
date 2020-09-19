@@ -3,12 +3,11 @@ const devices = require('puppeteer/DeviceDescriptors')
 const device = devices['iPhone 8']
 const htmlToText = require('html-to-text')
 
-module.exports = async function (sourceConfigs, articleUrlLength) {
-	const browser = await getBrowser()
-	const browserPage = await browser.newPage()
-	await browserPage.setDefaultNavigationTimeout(0);
+module.exports = async function (sourceConfigs, { articleUrlLength = 3, headless = true }) {
+	const browser = await getBrowser({ headless })
+	const browserPage = (await browser.pages())[0]
+	await browserPage.setDefaultNavigationTimeout(0)
 	await browserPage.emulate(device)
-	articleUrlLength = articleUrlLength || 3
 
 	let articles = []
 
@@ -21,11 +20,11 @@ module.exports = async function (sourceConfigs, articleUrlLength) {
 			const linkSelector = page['link-selector']
 			const articleUrls = await browserPage.$$eval(linkSelector, (elements) => elements.map((element) => element.href))
 			for (const articleUrl of articleUrls.slice(0, articleUrlLength)) {
-				try{
-					await browserPage.goto(articleUrl,{
+				try {
+					await browserPage.goto(articleUrl, {
 						waitUntil: 'load',
 						// Remove the timeout
-						timeout: 0
+						timeout: 0,
 					})
 
 					const title = await browserPage.$eval(articleSelectors.title, (element) => element.textContent)
@@ -61,13 +60,12 @@ module.exports = async function (sourceConfigs, articleUrlLength) {
 						modifiedDate: source.crawlTime,
 						publishedDate: source.crawlTime,
 						link: articleUrl,
-						topic: page.category
+						topic: page.category,
 					}
 
 					articles.push(article)
-
-				}catch(error){
-					console.log("error produced article crawl",error.message, articleUrl)	
+				} catch (error) {
+					console.log('error produced article crawl', error.message, articleUrl)
 				}
 			}
 		}
