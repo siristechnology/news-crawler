@@ -1,6 +1,6 @@
 {
 	"name": "news-crawler",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"description": "Config based news crawler using Google Puppeteer",
 	"main": "src/index.js",
 	"scripts": {
