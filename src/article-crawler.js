@@ -1,6 +1,6 @@
 const getBrowser = require('./get-browser')
-const devices = require('puppeteer/DeviceDescriptors')
-const device = devices['iPhone 8']
+const puppeteer = require('puppeteer')
+const device = puppeteer.devices['iPhone 8']
 const htmlToText = require('html-to-text')
 
 module.exports = async function (sourceConfigs, { articleUrlLength = 3, headless = true }) {
@@ -71,7 +71,7 @@ module.exports = async function (sourceConfigs, { articleUrlLength = 3, headless
 		}
 	}
 
-	browser.close()
+	await browser.close()
 
 	return articles
 }

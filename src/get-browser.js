@@ -6,13 +6,14 @@ const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
 
 module.exports = async function ({ headless }) {
+	const disableGlDrawing = headless ? '--disable-gl-drawing-for-tests' : ''
+
 	const browser = await puppeteer.launch({
 		args: [
 			'--disable-accelerated-video',
 			'--disable-extensions',
 			'--disable-metrics',
 			'--disable-plugins',
-			'--disable-images',
 			'--disable-infobars',
 			'--disable-flash-3d',
 			'--ignore-certifcate-errors',
@@ -36,6 +37,15 @@ module.exports = async function ({ headless }) {
 			'--disable-sync',
 			'--disable-speech-api',
 			'--user-gesture-required',
+			'--disable-logging',
+			'--disable-file-system',
+			'--disable-touch-drag-drop',
+			'--disable-touch-adjustment',
+			'--disable-usb-keyboard-detect',
+			'--disable-back-forward-cache',
+			'--disable-breakpad',
+			'--disable-demo-mode',
+			disableGlDrawing,
 		],
 		ignoreHTTPSErrors: true,
 		headless,
