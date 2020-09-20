@@ -5,7 +5,7 @@ puppeteer.use(StealthPlugin())
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
 
-module.exports = async function ({ headless }) {
+module.exports = async function ({ headless = true }) {
 	const disableGlDrawing = headless ? '--disable-gl-drawing-for-tests' : ''
 
 	const browser = await puppeteer.launch({
