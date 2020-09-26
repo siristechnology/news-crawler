@@ -3,10 +3,12 @@ const puppeteer = require('puppeteer')
 const device = puppeteer.devices['iPhone 8']
 const htmlToText = require('html-to-text')
 
-module.exports = async function (sourceConfigs, { articleUrlLength = 3, headless = true }) {
+module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrlLength = 3, headless = true }) {
 	const browser = await getBrowser({ headless })
 	const browserPage = (await browser.pages())[0]
-	try{
+	maxArticlesPerPage = maxArticlesPerPage || articleUrlLength
+
+	try {
 		await browserPage.setDefaultNavigationTimeout(0)
 		await browserPage.emulate(device)
 
@@ -20,7 +22,7 @@ module.exports = async function (sourceConfigs, { articleUrlLength = 3, headless
 
 				const linkSelector = page['link-selector']
 				const articleUrls = await browserPage.$$eval(linkSelector, (elements) => elements.map((element) => element.href))
-				for (const articleUrl of articleUrls.slice(0, articleUrlLength)) {
+				for (const articleUrl of articleUrls.slice(0, maxArticlesPerPage)) {
 					try {
 						await browserPage.goto(articleUrl, {
 							waitUntil: 'load',
@@ -75,7 +77,7 @@ module.exports = async function (sourceConfigs, { articleUrlLength = 3, headless
 		await browser.close()
 
 		return articles
-	}catch{
+	} catch {
 		await browser.close()
 		return []
 	}

@@ -1,6 +1,6 @@
 {
 	"name": "news-crawler",
-	"version": "1.10.0",
+	"version": "1.11.0",
 	"description": "Config based news crawler using Google Puppeteer",
 	"main": "src/index.js",
 	"scripts": {
@@ -8,8 +8,12 @@
 		"test": "jest --testMatch '**/?(*.)+(spec|test).[tj]s?(x)' ",
 		"test:coverage": "jest --coverage --testMatch '**/?(*.)+(spec|test).[tj]s?(x)' "
 	},
-	"keywords": [],
-	"author": "@syuraj",
+	"keywords": [
+		"news crawler",
+		"puppeteer",
+		"chromium"
+	],
+	"author": "@siristechnology",
 	"license": "ISC",
 	"dependencies": {
 		"html-to-text": "^5.1.1",
