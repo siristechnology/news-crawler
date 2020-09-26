@@ -1,4 +1,4 @@
-# news-crawler [beta]
+# news-crawler
 
 Config based news crawler using Google Puppeteer
 
@@ -12,7 +12,7 @@ Config based news crawler using Google Puppeteer
 
 ## Sample code
 
-    const articles = await NewsCrawler(sourceConfig, { headless: false })
+    const articles = await NewsCrawler(sourceConfig, { maxArticlesPerPage : 1, headless: false })
 
 ## Sample News Source Config
 
@@ -25,11 +25,6 @@ Config based news crawler using Google Puppeteer
                 "url": "https://ekantipur.com",
                 "category": "headlines",
                 "link-selector": "article.normal > h1 > a"
-            },
-            {
-                "url": "https://ekantipur.com/sports",
-                "category": "sports",
-                "link-selector": "#wrapper > main > section article > div.teaser > a"
             }
         ],
         "article-detail-selectors": {
