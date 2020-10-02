@@ -79,7 +79,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 						let article = {
 							sourceName: source.sourceName,
 							category: page.category,
-							link: page.url,
+							link: imageUrl,
 							imageLink: imageUrl,
 							title: imageUrl,
 							content: imageUrl,
