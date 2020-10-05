@@ -73,6 +73,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 						}
 					}
 				}else{
+					console.log("Crawling image..")
 					const imageSelector = page['image-selector']
 					const imageUrls = await browserPage.$$eval(imageSelector, (elements) => elements.map((element) => element.src))
 					for(const imageUrl of imageUrls.slice(0, maxArticlesPerPage)){
