@@ -22,6 +22,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 
 				const linkSelector = page['link-selector']
 				if(linkSelector){
+					console.log("I m default article here")
 					const articleUrls = await browserPage.$$eval(linkSelector, (elements) => elements.map((element) => element.href))
 					for (const articleUrl of articleUrls.slice(0, maxArticlesPerPage)) {
 						try {
