@@ -82,6 +82,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							sourceName: source.sourceName,
 							category: page.category,
 							link: imageUrl,
+							shortDescription: imageUrl,
 							imageLink: imageUrl,
 							title: imageUrl,
 							content: imageUrl,
