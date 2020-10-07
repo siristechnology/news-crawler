@@ -5,8 +5,8 @@
 	"main": "src/index.js",
 	"scripts": {
 		"start": "node src/index.js",
-		"test": "jest --testMatch '**/?(*.)+(spec|test).[tj]s?(x)' ",
-		"test:coverage": "jest --coverage --testMatch '**/?(*.)+(spec|test).[tj]s?(x)' "
+		"test": "jest --testMatch \"**/?(*.)+(spec|test).[tj]s?(x)\" --detectOpenHandles --forceExit",
+		"test:coverage": "jest --coverage --testMatch '**/?(*.)+(spec|test).[tj]s?(x)'  --detectOpenHandles --forceExit"
 	},
 	"keywords": [
 		"news crawler",
