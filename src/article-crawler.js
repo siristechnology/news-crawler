@@ -54,7 +54,6 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 									wordwrap: false,
 									ignoreImage: true,
 									ignoreHref: true,
-									ignoreImage: true,
 									preserveNewlines: false,
 								})
 								.trim()
@@ -81,7 +80,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 
 							articles.push(article)
 						} catch (error) {
-							console.log('error produced article crawl', error.message, articleUrl)
+							console.error('Error while crawling article', error.message, articleUrl)
 						}
 					}
 				} else {
