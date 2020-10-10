@@ -24,13 +24,13 @@ Config based news crawler using Google Puppeteer
             {
                 "url": "https://ekantipur.com",
                 "category": "headlines",
-                "link-selector": "article.normal > h1 > a"
+                "linkSelector": "article.normal > h1 > a"
             }
         ],
         "article-detail-selectors": {
             "title": "main > article > header > h1",
             "excerpt": "article .text-wrap > h2",
-            "lead-image": "#wrapper main article header figure img",
+            "leadImage": "#wrapper main article header figure img",
             "content": [
                 "main article div.text-wrap p.description"
             ],

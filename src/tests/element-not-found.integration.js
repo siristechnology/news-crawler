@@ -18,6 +18,8 @@ describe('puppeteer', () => {
 
 		const content = await browserPage.$$eval(elementSelector, (elements) => (elements.length > 0 ? elements[0].textContent : null))
 		expect(content).toBeNull()
+
+		await browser.close()
 	})
 })
 
@@ -34,7 +36,7 @@ describe('article-crawler', () => {
 					{
 						url: 'https://merolagani.com/NewsList.aspx?id=6&type=latest',
 						category: 'share',
-						'link-selector': '.container .row h4.media-title > a',
+						linkSelector: '.container .row h4.media-title > a',
 					},
 				],
 				'article-detail-selectors': {
