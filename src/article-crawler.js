@@ -21,8 +21,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 				await browserPage.goto(page.url)
 
 				const linkSelector = page['link-selector']
-				if(linkSelector){
-					console.log("I m default article here")
+				if (linkSelector) {
 					const articleUrls = await browserPage.$$eval(linkSelector, (elements) => elements.map((element) => element.href))
 					for (const articleUrl of articleUrls.slice(0, maxArticlesPerPage)) {
 						try {
@@ -33,11 +32,18 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							})
 
 							const title = await browserPage.$eval(articleSelectors.title, (element) => element.textContent)
-							const excerpt = await browserPage.$eval(articleSelectors.excerpt, (element) => element.textContent)
-							const leadImage = await browserPage.$eval(articleSelectors['lead-image'], (element) => element.src)
+							const excerpt = await browserPage.$$eval(articleSelectors.excerpt, (elements) =>
+								elements.length > 0 ? elements[0].textContent : null,
+							)
+							const leadImage = await browserPage.$$eval(articleSelectors['lead-image'], (elements) =>
+								elements.length > 0 ? elements[0].src : null,
+							)
+
 							let content = []
 							for (const contentSelector of articleSelectors.content) {
-								const innerContent = await browserPage.$$eval(contentSelector, (elements) => elements.map((element) => element.innerHTML))
+								const innerContent = await browserPage.$$eval(contentSelector, (elements) =>
+									elements.map((element) => element.innerHTML),
+								)
 								content.push(innerContent)
 							}
 
@@ -56,11 +62,14 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								sourceName: source.sourceName,
 								category: page.category,
 								url: articleUrl,
+								articleUrl,
 								title,
 								shortDescription: excerpt,
+								excerpt,
 								imageLink: leadImage,
+								leadImage,
 								isHeadline: true,
-								content: content,
+								content,
 								createdDate: source.crawlTime,
 								modifiedDate: source.crawlTime,
 								publishedDate: source.crawlTime,
@@ -73,11 +82,11 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							console.log('error produced article crawl', error.message, articleUrl)
 						}
 					}
-				}else{
-					console.log("Crawling image..")
+				} else {
+					console.log('Crawling image..')
 					const imageSelector = page['image-selector']
 					const imageUrls = await browserPage.$$eval(imageSelector, (elements) => elements.map((element) => element.src))
-					for(const imageUrl of imageUrls.slice(0, maxArticlesPerPage)){
+					for (const imageUrl of imageUrls.slice(0, maxArticlesPerPage)) {
 						let article = {
 							sourceName: source.sourceName,
 							category: page.category,
@@ -87,7 +96,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							title: imageUrl,
 							content: imageUrl,
 							isHeadline: true,
-							topic: page.category
+							topic: page.category,
 						}
 						articles.push(article)
 					}

@@ -1,49 +1,51 @@
 [
-    {
-        "name": "ekantipur",
-        "pages": [
-            {
-                "url": "https://ekantipur.com",
-                "category": "headlines",
-                "link-selector": "article.normal > h1 > a"
-            },
-            {
-                "url": "https://ekantipur.com/sports",
-                "category": "sports",
-                "link-selector": "#wrapper > main > section article > div.teaser > a"
-            }
-        ],
-        "article-detail-selectors": {
-            "title": "main > article > header > h1",
-            "excerpt": "article .text-wrap > h2",
-            "lead-image": "#wrapper main article header figure img",
-            "content": [
-                "main article div.text-wrap p.description",
-                "main article div.text-wrap div.description"
-            ],
-            "tags": "",
-            "likes-count": "main > article > header div.total.shareTotal"
-        }
-    },
-    {
-        "name": "dainiknepal",
-        "pages": [
-            {
-                "url": "https://www.dainiknepal.com/",
-                "category": "headlines",
-                "link-selector": "#body_a #visesh > h1 > a"
-            }
-        ],
-        "article-detail-selectors": {
-            "title": "main div div h1.inside_head",
-            "excerpt": "main div div div.content p:nth-child(3)",
-            "lead-image": "main div.content p img",
-            "content": [
-                "main div.content"
-            ],
-            "tags": "",
-            "likes-count": "",
-            "date": ""
-        }
-    }
+	{
+		"name": "ekantipur",
+		"pages": [
+			{
+				"url": "https://ekantipur.com",
+				"category": "headlines",
+				"link-selector": "article.normal > h1 > a",
+				"linkSelector": "article.normal > h1 > a"
+			},
+			{
+				"url": "https://ekantipur.com/sports",
+				"category": "sports",
+				"link-selector": "#wrapper > main > section article > div.teaser > a",
+				"linkSelector": "#wrapper > main > section article > div.teaser > a"
+			}
+		],
+		"article-detail-selectors": {
+			"title": "main > article > header > h1",
+			"excerpt": "article .text-wrap > h2",
+			"lead-image": "#wrapper main article header figure img",
+			"leadImage": "#wrapper main article header figure img",
+			"content": ["main article div.text-wrap p.description", "main article div.text-wrap div.description"],
+			"tags": "",
+			"likes-count": "main > article > header div.total.shareTotal",
+			"likesCount": "main > article > header div.total.shareTotal"
+		}
+	},
+	{
+		"name": "dainiknepal",
+		"pages": [
+			{
+				"url": "https://www.dainiknepal.com/",
+				"category": "headlines",
+				"link-selector": "#body_a #visesh > h1 > a",
+				"linkSelector": "#body_a #visesh > h1 > a"
+			}
+		],
+		"article-detail-selectors": {
+			"title": "main div div h1.inside_head",
+			"excerpt": "main div div div.content p:nth-child(3)",
+			"lead-image": "main div.content p img",
+			"leadImage": "main div.content p img",
+			"content": ["main div.content"],
+			"tags": "",
+			"likes-count": "",
+			"likesCount": "",
+			"date": ""
+		}
+	}
 ]
