@@ -35,7 +35,9 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							const excerpt = await browserPage.$$eval(articleSelectors.excerpt, (elements) =>
 								elements.length > 0 ? elements[0].textContent : null,
 							)
-							const leadImage = await browserPage.$$eval(articleSelectors['lead-image'], (elements) =>
+
+							articleSelectors.leadImage = articleSelectors['lead-image']
+							const leadImage = await browserPage.$$eval(articleSelectors.leadImage, (elements) =>
 								elements.length > 0 ? elements[0].src : null,
 							)
 
