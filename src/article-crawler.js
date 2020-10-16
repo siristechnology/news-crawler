@@ -20,7 +20,11 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 			for (const page of source.pages) {
 				if (page.url == null) continue
 
-				await browserPage.goto(page.url, { timeout: pageTimeout })
+				try {
+					await browserPage.goto(page.url, { timeout: pageTimeout })
+				} catch {
+					continue
+				}
 
 				const linkSelector = page['link-selector'] || page.linkSelector
 				if (linkSelector) {
@@ -83,7 +87,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 
 							articles.push(article)
 						} catch (error) {
-							console.error('Error while crawling article', error.message, articleUrl)
+							console.log('Error while crawling article', error.message, articleUrl)
 						}
 					}
 				} else {
@@ -112,7 +116,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 
 		return articles
 	} catch (error) {
-		console.error('Error while crawling.', error)
+		console.log('Error while crawling.', error)
 		await browser.close()
 		return []
 	}
