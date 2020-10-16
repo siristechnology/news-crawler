@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer')
 const device = puppeteer.devices['iPhone 8']
 const htmlToText = require('html-to-text')
 
-module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrlLength = 3, headless = true }) {
+module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrlLength = 3, headless = true, pageTimeout = 20000 }) {
 	const browser = await getBrowser({ headless })
 	const browserPage = (await browser.pages())[0]
 	maxArticlesPerPage = maxArticlesPerPage || articleUrlLength
@@ -18,17 +18,20 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 			const articleSelectors = source['article-detail-selectors']
 
 			for (const page of source.pages) {
-				await browserPage.goto(page.url)
+				if (page.url == null) continue
+
+				await browserPage.goto(page.url, { timeout: pageTimeout })
 
 				const linkSelector = page['link-selector'] || page.linkSelector
 				if (linkSelector) {
 					const articleUrls = await browserPage.$$eval(linkSelector, (elements) => elements.map((element) => element.href))
 					for (const articleUrl of articleUrls.slice(0, maxArticlesPerPage)) {
 						try {
+							if (articleUrl == null) continue
+
 							await browserPage.goto(articleUrl, {
 								waitUntil: 'load',
-								// Remove the timeout
-								timeout: 0,
+								timeout: pageTimeout,
 							})
 
 							const title = await browserPage.$eval(articleSelectors.title, (element) => element.textContent)
@@ -108,7 +111,8 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 		await browser.close()
 
 		return articles
-	} catch {
+	} catch (error) {
+		console.error('Error while crawling.', error)
 		await browser.close()
 		return []
 	}
