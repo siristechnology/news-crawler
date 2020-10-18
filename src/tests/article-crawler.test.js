@@ -15,6 +15,13 @@ jest.mock('../get-browser', () => {
 			return 'excerpt1'
 		}
 	}
+
+	stubPage.$eval = async (selector) => {
+		const titleSelector = 'main > article > header > h1'
+		if (selector === titleSelector) {
+			return 'title1'
+		}
+	}
 	return () => stubBrowser
 })
 
@@ -47,7 +54,8 @@ describe('article-crawler unit test', () => {
 
 		const articles = await newsCrawler(sourceConfigs, { headless: true })
 
-		expect(articles.length).toBeGreaterThan(1)
-		expect(articles[0].excerpt.length).toBeGreaterThan(1)
+		expect(articles.length).toBe(2)
+		expect(articles[0].title).toBe('title1')
+		expect(articles[0].excerpt).toBe('excerpt1')
 	})
 })
