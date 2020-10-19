@@ -14,6 +14,12 @@ jest.mock('../get-browser', () => {
 		if (selector === excerptSelector) {
 			return 'excerpt1'
 		}
+
+		const imageSelector = "div.row.page-news-list > div > div > figure > img"
+		if(selector === imageSelector){
+			return ['imageUrl1', 'imageUrl2']
+		}
+
 	}
 
 	stubPage.$eval = async (selector) => {
@@ -49,7 +55,7 @@ describe('article-crawler unit test', () => {
 					tags: '',
 					'likes-count': 'main > article > header div.total.shareTotal',
 				},
-			},
+			}
 		]
 
 		const articles = await newsCrawler(sourceConfigs, { headless: true })
@@ -57,5 +63,29 @@ describe('article-crawler unit test', () => {
 		expect(articles.length).toBe(2)
 		expect(articles[0].title).toBe('title1')
 		expect(articles[0].excerpt).toBe('excerpt1')
+	})
+
+	it('should return image link from article', async () => {
+		const sourceConfigs = [
+			{
+				"name": "Baahrakhari",
+				"sourceName": "Baahrakhari",
+				"nepaliName": "बाह्रखरी",
+				"logoLink": "/assets/logos/baahrakhari-1.png",
+				"weight": 8,
+				"pages": [
+					{
+						"url": "https://baahrakhari.com/news-article/65/Cartoon",
+						"category": "cartoon",
+						"image-selector": "div.row.page-news-list > div > div > figure > img"
+					}
+				]
+			}
+		]
+
+		const articles = await newsCrawler(sourceConfigs, { headless: true })
+
+		expect(articles.length).toBe(2)
+		expect(articles[0].imageLink).toBe('imageUrl1')
 	})
 })
