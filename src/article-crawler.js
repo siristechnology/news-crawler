@@ -65,6 +65,15 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								})
 								.trim()
 								.slice(0, 2000)
+							
+							let audioUrl = ''
+
+							if(articleSelectors['audio-url']){
+								articleSelectors.audioUrl = articleSelectors['audio-url']
+								audioUrl = await browserPage.$$eval(articleSelectors.audioUrl, (elements) =>
+									elements.length > 0 ? elements[0].href : null,
+								)
+							}
 
 							let article = {
 								sourceName: source.sourceName,
@@ -83,6 +92,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								publishedDate: source.crawlTime,
 								link: articleUrl,
 								topic: page.category,
+								audioUrl
 							}
 
 							articles.push(article)
