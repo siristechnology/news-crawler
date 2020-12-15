@@ -65,6 +65,14 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								})
 								.trim()
 								.slice(0, 2000)
+
+							let articleDate = ''
+							if(articleSelectors['date-selector']){
+								articleSelectors.articleDate = articleSelectors['date-selector']
+								articleDate = await browserPage.$$eval(articleSelectors.articleDate, (elements) =>
+									elements.length > 0 ? elements[0].textContent : null,
+								)
+							}
 							
 							let audioUrl = ''
 
@@ -87,9 +95,9 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								leadImage,
 								isHeadline: true,
 								content,
-								createdDate: source.crawlTime,
-								modifiedDate: source.crawlTime,
-								publishedDate: source.crawlTime,
+								createdDate: articleDate,
+								modifiedDate: articleDate,
+								publishedDate: articleDate,
 								link: articleUrl,
 								topic: page.category,
 								audioUrl
@@ -102,7 +110,9 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 					}
 				} else {
 					const imageSelector = page['image-selector']
+					const dateSelector = page['date-selectors']
 					const imageUrls = await browserPage.$$eval(imageSelector, (elements) => elements.map((element) => element.src))
+					const dates = await browserPage.$$eval(dateSelector, (elements) => elements.map((element) => element.textContent))
 					for (const imageUrl of imageUrls.slice(0, maxArticlesPerPage)) {
 						let article = {
 							sourceName: source.sourceName,
@@ -114,6 +124,9 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							content: imageUrl,
 							isHeadline: true,
 							topic: page.category,
+							createdDate: dates[imageUrls.indexOf(imageUrl)],
+							modifiedDate: dates[imageUrls.indexOf(imageUrl)],
+							publishedDate: dates[imageUrls.indexOf(imageUrl)],
 						}
 						articles.push(article)
 					}

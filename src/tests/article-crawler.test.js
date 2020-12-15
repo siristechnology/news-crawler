@@ -15,9 +15,14 @@ jest.mock('../get-browser', () => {
 			return 'excerpt1'
 		}
 
-		const imageSelector = "div.row.page-news-list > div > div > figure > img"
+		const imageSelector = "div.select-cartoon > div > div > figure > a > img"
 		if(selector === imageSelector){
 			return ['imageUrl1', 'imageUrl2']
+		}
+
+		const dateSelectors = "div.select-cartoon > div > div > figure > a > small"
+		if(selector === dateSelectors){
+			return ['date1', 'date2', 'date3']
 		}
 
 	}
@@ -68,16 +73,17 @@ describe('article-crawler unit test', () => {
 	it('should return image link from article', async () => {
 		const sourceConfigs = [
 			{
-				"name": "Baahrakhari",
-				"sourceName": "Baahrakhari",
-				"nepaliName": "बाह्रखरी",
-				"logoLink": "/assets/logos/baahrakhari-1.png",
-				"weight": 8,
+				"name": "Annnapurna Post",
+				"sourceName": "Annapurna Post",
+				"nepaliName": "अन्‍नपूर्ण पोस्ट्",
+				"logoLink": "/assets/logos/annapurna-1.png",
+				"weight": 10,
 				"pages": [
 					{
-						"url": "https://baahrakhari.com/news-article/65/Cartoon",
+						"url": "http://annapurnapost.com/cartoon",
 						"category": "cartoon",
-						"image-selector": "div.row.page-news-list > div > div > figure > img"
+						"image-selector": "div.select-cartoon > div > div > figure > a > img",
+						"date-selectors": "div.select-cartoon > div > div > figure > a > small"
 					}
 				]
 			}
