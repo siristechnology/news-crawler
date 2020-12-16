@@ -95,9 +95,9 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								leadImage,
 								isHeadline: true,
 								content,
-								createdDate: articleDate,
-								modifiedDate: articleDate,
-								publishedDate: articleDate,
+								createdDate: articleDate || source.crawlTime,
+								modifiedDate: articleDate || source.crawlTime,
+								publishedDate: articleDate || source.crawlTime,
 								link: articleUrl,
 								topic: page.category,
 								audioUrl
