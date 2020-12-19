@@ -134,14 +134,11 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 			}
 		}
 
-		await browserPage.close()
-
 		await browser.close()
 
 		return articles
 	} catch (error) {
 		console.log('Error while crawling.', error)
-		await browserPage.close()
 		await browser.close()
 		return []
 	}
