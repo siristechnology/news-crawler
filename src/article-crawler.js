@@ -79,7 +79,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							if(articleSelectors['audio-url']){
 								articleSelectors.audioUrl = articleSelectors['audio-url']
 								audioUrl = await browserPage.$$eval(articleSelectors.audioUrl, (elements) =>
-									elements.length > 0 ? elements[0].href : null,
+									elements.length > 0 ? (elements[0].href || elements[0].src) : null,
 								)
 							}
 
