@@ -100,7 +100,8 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								publishedDate: articleDate || source.crawlTime,
 								link: articleUrl,
 								topic: page.category,
-								audioUrl
+								audioUrl,
+								program: page.program
 							}
 
 							articles.push(article)
