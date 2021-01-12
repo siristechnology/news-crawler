@@ -101,7 +101,8 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								link: articleUrl,
 								topic: page.category,
 								audioUrl,
-								program: page.program
+								program: page.program,
+								programInEnglish: page.programInEnglish
 							}
 
 							articles.push(article)
