@@ -45,7 +45,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 
 							articleSelectors.leadImage = articleSelectors['lead-image']
 							const leadImage = await browserPage.$$eval(articleSelectors.leadImage, (elements) =>
-								elements.length > 0 ? (elements[0].src || elements[0].currentSrc) : null,
+								elements.length > 0 ? elements[0].src || elements[0].currentSrc : null,
 							)
 
 							let content = []
@@ -67,19 +67,19 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								.slice(0, 2000)
 
 							let articleDate = ''
-							if(articleSelectors['date-selector']){
+							if (articleSelectors['date-selector']) {
 								articleSelectors.articleDate = articleSelectors['date-selector']
 								articleDate = await browserPage.$$eval(articleSelectors.articleDate, (elements) =>
 									elements.length > 0 ? elements[0].textContent : null,
 								)
 							}
-							
+
 							let audioUrl = ''
 
-							if(articleSelectors['audio-url']){
+							if (articleSelectors['audio-url']) {
 								articleSelectors.audioUrl = articleSelectors['audio-url']
 								audioUrl = await browserPage.$$eval(articleSelectors.audioUrl, (elements) =>
-									elements.length > 0 ? (elements[0].href || elements[0].src) : null,
+									elements.length > 0 ? elements[0].href || elements[0].src : null,
 								)
 							}
 
@@ -88,19 +88,19 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								...page,
 								url: articleUrl,
 								articleUrl,
-								title: title ? title.trim(): "",
-								shortDescription: excerpt ? excerpt.trim(): "",
-								excerpt: excerpt ? excerpt.trim(): "",
+								title: title ? title.trim() : '',
+								shortDescription: excerpt ? excerpt.trim() : '',
+								excerpt: excerpt ? excerpt.trim() : '',
 								imageLink: leadImage,
 								leadImage,
 								isHeadline: true,
-								content: content ? content.trim(): "",
+								content: content ? content.trim() : '',
 								createdDate: articleDate || source.crawlTime,
 								modifiedDate: articleDate || source.crawlTime,
 								publishedDate: articleDate || source.crawlTime,
 								link: articleUrl,
 								topic: page.category,
-								audioUrl
+								audioUrl,
 							}
 
 							articles.push(article)
@@ -128,6 +128,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							modifiedDate: dates[imageUrls.indexOf(imageUrl)],
 							publishedDate: dates[imageUrls.indexOf(imageUrl)],
 						}
+
 						articles.push(article)
 					}
 				}
@@ -135,6 +136,12 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 		}
 
 		await browser.close()
+
+		articles.forEach((a) => {
+			delete a.pages
+			delete a['article-detail-selectors']
+			delete a['link-selector']
+		})
 
 		return articles
 	} catch (error) {
