@@ -84,9 +84,8 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							}
 
 							let article = {
+								...source,
 								...page,
-								sourceName: source.sourceName,
-								category: page.category,
 								url: articleUrl,
 								articleUrl,
 								title: title ? title.trim(): "",
@@ -116,8 +115,8 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 					const dates = await browserPage.$$eval(dateSelector, (elements) => elements.map((element) => element.textContent))
 					for (const imageUrl of imageUrls.slice(0, maxArticlesPerPage)) {
 						let article = {
-							sourceName: source.sourceName,
-							category: page.category,
+							...source,
+							...page,
 							link: imageUrl,
 							shortDescription: imageUrl,
 							imageLink: imageUrl,
