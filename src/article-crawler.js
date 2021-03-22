@@ -84,25 +84,24 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 							}
 
 							let article = {
+								...page,
 								sourceName: source.sourceName,
 								category: page.category,
 								url: articleUrl,
 								articleUrl,
-								title: title.trim(),
-								shortDescription: excerpt.trim(),
-								excerpt: excerpt.trim(),
+								title: title ? title.trim(): "",
+								shortDescription: excerpt ? excerpt.trim(): "",
+								excerpt: excerpt ? excerpt.trim(): "",
 								imageLink: leadImage,
 								leadImage,
 								isHeadline: true,
-								content: content.trim(),
+								content: content ? content.trim(): "",
 								createdDate: articleDate || source.crawlTime,
 								modifiedDate: articleDate || source.crawlTime,
 								publishedDate: articleDate || source.crawlTime,
 								link: articleUrl,
 								topic: page.category,
-								audioUrl,
-								program: page.program,
-								programInEnglish: page.programInEnglish
+								audioUrl
 							}
 
 							articles.push(article)
