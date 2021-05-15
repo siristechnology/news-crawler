@@ -62,8 +62,6 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								ignoreHref: true,
 								preserveNewlines: false,
 							})
-								.trim()
-								.slice(0, 2000)
 
 							let articleDate = ''
 							if (articleSelectors['date-selector']) {
@@ -93,7 +91,7 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								imageLink: leadImage,
 								leadImage,
 								isHeadline: true,
-								content: content ? content.trim() : '',
+								content: content ? content.trim().slice(0, 2000) : '',
 								createdDate: articleDate || source.crawlTime,
 								modifiedDate: articleDate || source.crawlTime,
 								publishedDate: articleDate || source.crawlTime,
