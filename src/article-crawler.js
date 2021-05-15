@@ -1,7 +1,7 @@
 const getBrowser = require('./get-browser')
 const puppeteer = require('puppeteer')
 const device = puppeteer.devices['iPhone 8']
-const htmlToText = require('html-to-text')
+const { htmlToText } = require('html-to-text')
 
 module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrlLength = 3, headless = true, pageTimeout = 20000 }) {
 	const browser = await getBrowser({ headless })
@@ -56,13 +56,12 @@ module.exports = async function (sourceConfigs, { maxArticlesPerPage, articleUrl
 								content.push(innerContent)
 							}
 
-							content = htmlToText
-								.fromString(content, {
-									wordwrap: false,
-									ignoreImage: true,
-									ignoreHref: true,
-									preserveNewlines: false,
-								})
+							content = htmlToText(content, {
+								wordwrap: false,
+								ignoreImage: true,
+								ignoreHref: true,
+								preserveNewlines: false,
+							})
 								.trim()
 								.slice(0, 2000)
 
